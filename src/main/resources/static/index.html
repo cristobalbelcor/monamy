@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Monamy · Tu espacio seguro</title>
+    <meta name="description" content="Monamy: Apoyo emocional y orientación para niños, adolescentes, familias y educadores en Colombia.">
+    <link rel="stylesheet" href="styles.css?v=4">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- BOTÓN SOS FLOTANTE -->
+    <button class="sos-btn" id="sos-btn" aria-label="Ver líneas de emergencia">
+        <i class="fa-solid fa-shield-heart"></i>
+        <span>SOS</span>
+    </button>
+
+    <!-- MODAL DE EMERGENCIAS -->
+    <div class="modal-overlay hidden" id="emergency-modal" role="dialog" aria-modal="true" aria-label="Líneas de ayuda">
+        <div class="emergency-sheet">
+            <button class="sheet-close" id="close-emergency" aria-label="Cerrar">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="emergency-head">
+                <div class="emergency-icon-wrap">🛡️</div>
+                <h2>Líneas de Ayuda</h2>
+                <p>Si estás en peligro o alguien cercano lo está, llama ahora. Es <strong>gratis</strong> y <strong>confidencial</strong>.</p>
+            </div>
+            <div class="emergency-lines">
+                <a href="tel:106" class="eline icbf">
+                    <div class="eline-icon"><i class="fa-solid fa-child-reaching"></i></div>
+                    <div class="eline-info">
+                        <strong>106 · ICBF</strong>
+                        <span>Protección de niñez y adolescencia · 24 horas</span>
+                    </div>
+                    <div class="eline-call">Llamar</div>
+                </a>
+                <a href="tel:108" class="eline salud">
+                    <div class="eline-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <div class="eline-info">
+                        <strong>108 · Salud Mental</strong>
+                        <span>Crisis emocional, ansiedad, depresión · 24 horas</span>
+                    </div>
+                    <div class="eline-call">Llamar</div>
+                </a>
+                <a href="tel:123" class="eline emergencia">
+                    <div class="eline-icon"><i class="fa-solid fa-truck-medical"></i></div>
+                    <div class="eline-info">
+                        <strong>123 · Emergencias</strong>
+                        <span>Peligro inmediato, violencia, desaparición</span>
+                    </div>
+                    <div class="eline-call">Llamar</div>
+                </a>
+                <a href="tel:155" class="eline violencia">
+                    <div class="eline-icon"><i class="fa-solid fa-person-shelter"></i></div>
+                    <div class="eline-info">
+                        <strong>155 · Violencia de Género</strong>
+                        <span>Violencia intrafamiliar y de género · Gratuito</span>
+                    </div>
+                    <div class="eline-call">Llamar</div>
+                </a>
+            </div>
+            <p class="emergency-note">💛 Si no puedes llamar, cuéntaselo a un adulto de confianza o a tu profe.</p>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         PANTALLA 1: HOME
+    ════════════════════════════════════════ -->
+    <div id="screen-home" class="screen active">
+        <div class="home-bg">
+            <div class="bg-blob b1"></div>
+            <div class="bg-blob b2"></div>
+            <div class="bg-blob b3"></div>
+        </div>
+        <div class="home-scroll">
+
+            <header class="home-nav">
+                <div class="brand">
+                    <img src="img/logo.png" alt="Monamy" class="brand-logo">
+                    <span class="brand-name">Monamy</span>
+                </div>
+            </header>
+
+            <!-- HERO -->
+            <section class="hero">
+                <div class="hero-visual">
+                    <div class="mascot-circle">
+                        <img src="img/logo.png" alt="Monamy" class="mascot-img">
+                    </div>
+                    <span class="mascot-spark sp1">✨</span>
+                    <span class="mascot-spark sp2">💙</span>
+                    <span class="mascot-spark sp3">⭐</span>
+                    <span class="mascot-spark sp4">💚</span>
+                </div>
+                <div class="hero-content">
+                    <span class="hero-tag">✨ Tu espacio seguro</span>
+                    <h1 class="hero-title">
+                        Eres importante.<br>
+                        <em>Siempre hay alguien<br>que puede ayudarte.</em>
+                    </h1>
+                    <p class="hero-desc">
+                        Monamy te acompaña con respeto y sin juicios. Habla sobre lo que sientes, lo que te preocupa o lo que necesitas entender.
+                    </p>
+                </div>
+            </section>
+
+            <!-- SELECCIÓN DE ROL -->
+            <section class="home-section">
+                <h2 class="section-title">¿Quién eres?</h2>
+                <p class="section-sub">Elige tu rol para que Monamy se adapte a ti.</p>
+                <div class="role-grid">
+                    <button class="role-card" data-role="nino">
+                        <span class="rc-emoji">🧒</span>
+                        <strong>Niño o niña</strong>
+                        <small>6 a 11 años</small>
+                    </button>
+                    <button class="role-card" data-role="adolescente">
+                        <span class="rc-emoji">🧑</span>
+                        <strong>Adolescente</strong>
+                        <small>12 a 17 años</small>
+                    </button>
+                    <button class="role-card" data-role="adulto">
+                        <span class="rc-emoji">👨‍👩‍👧</span>
+                        <strong>Padre, madre o acudiente</strong>
+                        <small>Apoyo familiar</small>
+                    </button>
+                    <button class="role-card" data-role="docente">
+                        <span class="rc-emoji">🎓</span>
+                        <strong>Docente u orientador</strong>
+                        <small>Apoyo escolar</small>
+                    </button>
+                </div>
+            </section>
+
+            <!-- TEMAS (se muestra después de seleccionar rol) -->
+            <section class="home-section hidden" id="topics-section">
+                <h2 class="section-title" id="topics-title">¿Sobre qué quieres hablar?</h2>
+                <p class="section-sub" id="topics-sub"></p>
+                <div class="topics-grid" id="topics-grid"></div>
+            </section>
+
+            <!-- CARDS DE ALERTA (tipo ANAR) -->
+            <section class="home-section alerts-section">
+                <h2 class="section-title alert-title">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    Situaciones que necesitan ayuda especial
+                </h2>
+                <p class="section-sub">Si tú o alguien cercano está viviendo algo de esto, hay apoyo disponible ahora mismo:</p>
+                <div class="alerts-grid">
+                    <button class="alert-card" data-alert="desaparicion">
+                        <span class="ac-emoji">🔍</span>
+                        <div class="ac-info">
+                            <h4>Desaparición o secuestro</h4>
+                            <p>Alguien fue llevado sin querer o no aparece</p>
+                        </div>
+                        <span class="ac-badge">106 · 123</span>
+                    </button>
+                    <button class="alert-card" data-alert="abuso">
+                        <span class="ac-emoji">🛡️</span>
+                        <div class="ac-info">
+                            <h4>Abuso o maltrato</h4>
+                            <p>Violencia física, emocional o sexual</p>
+                        </div>
+                        <span class="ac-badge">106 · 155</span>
+                    </button>
+                    <button class="alert-card" data-alert="bullying">
+                        <span class="ac-emoji">💬</span>
+                        <div class="ac-info">
+                            <h4>Bullying o acoso</h4>
+                            <p>En el colegio, en redes o en la comunidad</p>
+                        </div>
+                        <span class="ac-badge">106</span>
+                    </button>
+                    <button class="alert-card" data-alert="crisis">
+                        <span class="ac-emoji">🧠</span>
+                        <div class="ac-info">
+                            <h4>Crisis emocional</h4>
+                            <p>Pensamientos de hacerse daño o desesperanza</p>
+                        </div>
+                        <span class="ac-badge">108 · 123</span>
+                    </button>
+                </div>
+            </section>
+
+            <footer class="home-footer">
+                <p>Monamy es una herramienta sin ánimo de lucro de apoyo emocional y pedagógico.</p>
+                <p>No reemplaza la atención psicológica, médica o institucional profesional.</p>
+                <p class="footer-credits">Universidad del Tolima · CIPA #3 · 2026</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         PANTALLA 1.5: DETALLE DE TEMA (NIÑOS)
+    ════════════════════════════════════════ -->
+    <div id="screen-topic" class="screen">
+        <div class="home-bg">
+            <div class="bg-blob b1"></div>
+            <div class="bg-blob b2"></div>
+        </div>
+        <div class="topic-detail-scroll">
+            <header class="home-nav">
+                <button class="back-btn-home" id="back-to-home-btn" aria-label="Volver">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="brand">
+                    <img src="img/logo.png" alt="Monamy" class="brand-logo">
+                    <span class="brand-name">Monamy</span>
+                </div>
+            </header>
+
+            <div class="topic-detail-hero" id="topic-detail-hero">
+                <!-- llenado por JS -->
+            </div>
+
+            <div class="topic-detail-body">
+                <h3 class="subtopics-label">¿Qué parte te pasa a ti?</h3>
+                <div class="subtopics-grid" id="subtopics-grid">
+                    <!-- llenado por JS -->
+                </div>
+                <button class="talk-general-btn" id="talk-general-btn">
+                    <i class="fa-solid fa-comments"></i>
+                    Hablar de todo esto en general
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════
+         PANTALLA 2: CHAT
+    ════════════════════════════════════════ -->
+    <div id="screen-chat" class="screen">
+        <div class="chat-bg">
+            <div class="cb1"></div>
+            <div class="cb2"></div>
+            <div class="cb3"></div>
+        </div>
+        <main class="chat-app">
+            <header class="chat-header">
+                <button class="back-btn" id="back-btn" aria-label="Volver al inicio">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div class="chat-brand">
+                    <img src="img/logo.png" alt="Monamy" class="chat-logo">
+                    <span>Monamy</span>
+                </div>
+                <div class="chat-badge" id="chat-badge"></div>
+            </header>
+
+            <div class="chat-messages" id="chat-messages"></div>
+
+            <div class="typing-indicator hidden" id="typing-indicator">
+                <div class="typing-avatar">
+                    <img src="img/logo.png" alt="" style="width:20px;height:20px;object-fit:contain;">
+                </div>
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="chat-footer">
+                <div class="suggestions-row" id="suggestions-row"></div>
+                <div class="input-wrap" id="input-wrap">
+                    <form id="chat-form">
+                        <textarea id="user-input" placeholder="Escribe aquí..." rows="1" required></textarea>
+                        <button type="submit" id="send-btn" aria-label="Enviar mensaje">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js?v=4"></script>
+</body>
+</html>
