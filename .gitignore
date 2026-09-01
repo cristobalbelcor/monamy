@@ -1,10 +1,27 @@
+# Compilación
 target/
-.DS_Store
 *.class
+
+# Artefactos empaquetados
 *.jar
 *.war
 *.ear
-*.logs
+
+# Maven descargado por el wrapper (mvnw lo baja solo, no se versiona)
+.mvn/maven/
+
+# Configuración local con secretos
+.env
+src/main/resources/application-local.properties
+
+# Entornos de desarrollo
 .idea/
 *.iml
 .vscode/
+
+# Sistema operativo
+.DS_Store
+
+# Logs
+*.log
+*.logs
