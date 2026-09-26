@@ -4,13 +4,18 @@ import com.example.monamy.config.GroqConfig;
 import com.example.monamy.model.Mensaje;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
+import org.springframework.http.codec.ServerSentEvent;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Flux;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Servicio que gestiona la comunicación con la API de Groq.
@@ -68,6 +73,30 @@ public class GroqService {
     }
 
     /**
+     * Pide la respuesta a Groq en streaming y emite cada fragmento de texto
+     * en cuanto llega, sin esperar a que el modelo termine.
+     *
+     * @param mensajes Lista de mensajes de la conversación
+     * @return Fragmentos de la respuesta, en orden
+     */
+    public Flux<String> transmitirRespuesta(List<Mensaje> mensajes) {
+        Map<String, Object> requestBody = construirPayload(mensajes);
+        requestBody.put("stream", true);
+
+        return groqWebClient.post()
+                .accept(MediaType.TEXT_EVENT_STREAM)
+                .bodyValue(requestBody)
+                .retrieve()
+                .bodyToFlux(new ParameterizedTypeReference<ServerSentEvent<String>>() {})
+                .map(ServerSentEvent::data)
+                .filter(Objects::nonNull)
+                // Groq cierra el stream con un evento "[DONE]" que no es JSON.
+                .takeWhile(data -> !"[DONE]".equals(data))
+                .map(this::extraerFragmento)
+                .filter(fragmento -> !fragmento.isEmpty());
+    }
+
+    /**
      * Construye el payload JSON que espera la API de Groq.
      * Encapsula la lógica de formato del request.
      */
@@ -89,6 +118,19 @@ public class GroqService {
             return root.path("choices").get(0).path("message").path("content").asText();
         } catch (Exception e) {
             throw new RuntimeException("Error al parsear la respuesta de la IA: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Extrae el texto de un evento del stream. Los eventos de control
+     * (rol inicial, motivo de fin) no traen contenido y devuelven "".
+     */
+    private String extraerFragmento(String eventoJson) {
+        try {
+            JsonNode root = objectMapper.readTree(eventoJson);
+            return root.path("choices").path(0).path("delta").path("content").asText("");
+        } catch (Exception e) {
+            throw new RuntimeException("Error al parsear el stream de la IA: " + e.getMessage());
         }
     }
 }

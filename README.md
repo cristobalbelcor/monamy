@@ -76,11 +76,16 @@ El frontend usa módulos ES nativos: no hay empaquetador ni paso de compilación
 
 ## Arquitectura
 
-El navegador nunca ve la API key. El frontend habla solo con `POST /api/chat`
-de este backend, y es el backend quien añade la credencial y llama al proveedor.
+El navegador nunca ve la API key. El frontend habla solo con este backend, y es
+el backend quien añade la credencial y llama al proveedor.
+
+El chat usa `POST /api/chat/stream`: la respuesta llega como Server-Sent Events
+(`fragmento`, y al final `fin` o `error`) a medida que el modelo la genera, así el
+texto empieza a verse en cuanto sale el primer token. `POST /api/chat` sigue
+disponible y devuelve la respuesta completa en un solo JSON.
 
 ```
-navegador  ──POST /api/chat──>  ChatController  ──>  GroqService  ──>  API del proveedor
+navegador  ──POST /api/chat/stream──>  ChatController  ──>  GroqService  ──>  API del proveedor
                                       │
                               GlobalExceptionHandler
                     (traduce cualquier fallo a una respuesta amable)

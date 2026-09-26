@@ -46,9 +46,16 @@ export async function sendMessage(text) {
     conversation.addUser(text);
     chatUI.showTyping();
 
+    // La burbuja se crea con el primer fragmento: hasta entonces se ve el indicador de escritura.
+    let bubble = null;
     try {
-        const reply = await client.send(conversation.getAll());
-        chatUI.append('bot', reply);
+        const reply = await client.stream(conversation.getAll(), (text) => {
+            if (!bubble) {
+                chatUI.hideTyping();
+                bubble = chatUI.appendStreaming();
+            }
+            bubble.update(text);
+        });
         conversation.addBot(reply);
     } catch (error) {
         console.error('Error Monamy:', error);

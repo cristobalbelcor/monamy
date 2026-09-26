@@ -24,6 +24,33 @@ export class ChatUI {
         this.scroll();
     }
 
+    /**
+     * Añade un mensaje del bot vacío que se va completando mientras llega el stream.
+     * @returns {{update: (markdown: string) => void}}
+     */
+    appendStreaming() {
+        const wrap = document.createElement('div');
+        wrap.className = 'message bot';
+        const bubble = this.#buildBubble('bot', '');
+        wrap.append(this.#buildAvatar('bot'), bubble);
+        this.el.appendChild(wrap);
+
+        // Se repinta como mucho una vez por frame aunque lleguen muchos fragmentos seguidos.
+        let pending = null;
+        return {
+            update: (markdown) => {
+                if (pending === null) {
+                    requestAnimationFrame(() => {
+                        this.#renderBot(bubble, pending);
+                        pending = null;
+                        this.scroll();
+                    });
+                }
+                pending = markdown;
+            },
+        };
+    }
+
     #buildAvatar(role) {
         const avatar = document.createElement('div');
         avatar.className = 'msg-avatar';
@@ -47,12 +74,20 @@ export class ChatUI {
         bubble.className = 'msg-bubble';
 
         // Solo el bot devuelve Markdown; el texto del usuario se inserta sin interpretar.
-        if (role === 'bot' && window.marked) {
-            bubble.innerHTML = window.marked.parse(content);
+        if (role === 'bot') {
+            this.#renderBot(bubble, content);
         } else {
             bubble.textContent = content;
         }
         return bubble;
+    }
+
+    #renderBot(bubble, markdown) {
+        if (window.marked) {
+            bubble.innerHTML = window.marked.parse(markdown);
+        } else {
+            bubble.textContent = markdown;
+        }
     }
 
     clear() {

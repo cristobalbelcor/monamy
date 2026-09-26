@@ -3,6 +3,9 @@
 /** Endpoint del backend que reenvía la conversación al proveedor de IA. */
 export const CHAT_ENDPOINT = '/api/chat';
 
+/** Mismo endpoint, pero la respuesta llega por Server-Sent Events según se genera. */
+export const CHAT_STREAM_ENDPOINT = '/api/chat/stream';
+
 /** Color de acento cuando el rol no define uno. */
 export const DEFAULT_ACCENT = '#9F7AEA';
 
